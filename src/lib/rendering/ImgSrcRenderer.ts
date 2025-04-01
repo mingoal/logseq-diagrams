@@ -21,7 +21,7 @@ export abstract class ImgSrcRenderer extends Renderer {
             };
         });
 
-        return err != null ? `Rendering Error - Invalid img src ${imgSrc.substring(0, 32)} ...` :
+        return err != null ? `Rendering Error ${err} - Invalid img src ${imgSrc.substring(0, 64)} ...` :
             `<img style="box-shadow: none" src="${imgSrc}" alt="${this.type} diagram"/>`;
     }
 
