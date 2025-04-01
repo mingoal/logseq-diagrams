@@ -61,8 +61,12 @@ export class KrokiRenderer extends ImgSrcRenderer {
     }
 
     async createImgSrc(code: string): Promise<string> {
-        const compressed = pako.deflate(code, {level: 9});
-        const b64encoded = urlSafeBase64(String.fromCharCode.apply(null, Array.from(compressed)));
+        const data = Buffer.from(code, 'utf8') 
+        const compressed = pako.deflate(data, { level: 9 }) 
+        const b64encoded = Buffer.from(compressed)
+                               .toString('base64') 
+                               .replace(/\+/g, '-').replace(/\//g, '_');
+//        const b64encoded = urlSafeBase64(String.fromCharCode.apply(null, Array.from(compressed)));
 
         const diagramOptions = Object.entries(this.diagramOptions).map(([key, value]) => `${key}=${value}`).join("&");
 
